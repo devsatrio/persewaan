@@ -1,7 +1,5 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+error_reporting(0);
 session_start();
 
 include 'koneksi.php';
@@ -22,15 +20,17 @@ $huruf = "TRS";
 $kodeBarang = $huruf . sprintf("%03s", $urutan);
 
 //---------------------------------------------------------------------------------------------
+
+$datatanggal1 = explode('/',$tanggalpesan);
+$datatanggal2 = explode('/',$tanggalselesaipesan);
+
 $datetime1 = strtotime($datatanggal1[0]);
 $datetime2 = strtotime($datatanggal2[0]);
 $now = strtotime(date('y-m-d'));
-$datatanggal1 = explode('/',$tanggalpesan);
-$datatanggal2 = explode('/',$tanggalselesaipesan);
+
 if($now > $datetime1 || $now > $datetime2){
-    echo "<script>window.alert('Maaf, inputan tanggal pesan anda tidak valid'); window.location=('../tambah-pesanan.php')</script>";
+    echo "<script>window.alert('Maaf, inputan tanggal yang dimasukan anda tidak valid'); window.location=('../tambah-pesanan.php')</script>";
 }else{
-    
     if($datetime2 < $datetime1){
         echo "<script>window.alert('Maaf, inputan tanggal pesan anda tidak valid'); window.location=('../tambah-pesanan.php')</script>";
     }else{
@@ -89,4 +89,5 @@ if($now > $datetime1 || $now > $datetime2){
         $queryfinal = mysqli_query($koneksi,"update pemesanan set total='$subtotal_all' where id='$kodepemesanan'");
         echo "<script>window.alert('Data Berhasil Disimpan'); window.location=('../pesanan-saya.php')</script>";
     }
-}?>
+}
+?>
