@@ -42,11 +42,22 @@
                             $datapesanan = mysqli_query($koneksi,"select * from pemesanan where id_pengguna='$_SESSION[id]' order by id desc");
                             while($row=mysqli_fetch_assoc($datapesanan)) { ?>
                             <tr>
-                                <td class="text-center"><a href="detail_pesanan.php?kode=<?=$row['kode']?>"><?=$row['kode']?></a></td>
+                                <td class="text-center"><a
+                                        href="detail_pesanan.php?kode=<?=$row['kode']?>"><?=$row['kode']?></a></td>
                                 <td class="text-center"><?=$row['tanggal_pesan']?></td>
                                 <td class="text-center"><?=$row['tanggal_sewa']?> - <?=$row['tanggal_selesai_sewa']?>
                                 </td>
-                                <td class="text-center"><?=$row['status']?></td>
+                                <td class="text-center">
+                                    <?php if($row['status']=='Diterima'){
+                                    if($row['gambar_tf']!=''){
+                                        echo "Menunggu Konfirmasi Pembayaran Oleh Admin";
+                                    }else{
+                                        echo $row['status'];
+                                    }
+                                }else{
+                                    echo $row['status'];
+                                }?>
+                                </td>
                                 <td class="text-right"><?php echo "Rp. ".number_format($row['total'],0,',','.'); ?></td>
                                 <td class="text-center">
                                     <?php if($row['status']=='Menunggu Konfirmasi'){ ?>
